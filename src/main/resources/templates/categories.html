@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Product Categories</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Products</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>Categories</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="cat : ${categoriesModel.categoriesList}">
+				<td>
+					<a href="products.html" th:text="${cat}" th:href="@{/products(category=${cat})}">category</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<form action="#" th:action="@{/categories}" th:object="${searchModel}"
+		method="post">
+		<p>
+			Search for product name: <input type="text" th:field="*{productName}" />
+		</p>
+		<p>
+			<input type="submit" value="Submit" />
+		</p>
+	</form>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Customer Login</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>The Web Shop</h1>
+	<span th:text="${message}">text</span>
+    <form action="#" th:action="@{/}" th:object="${loginFormModel}" method="post">
+        <p><input type="text" placeholder="username" required="required" th:field="*{userName}" />
+        <input type="password" placeholder="password" required="required" th:field="*{password}" /></p>
+        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+    </form>
+    <p>Or create a new customer profile <a href="addUser">here</a></p>
+</body>
+</html>

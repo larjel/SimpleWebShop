@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Play Moo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<table>
+	<thead>
+        <tr>
+            <th> Guess </th>
+            <th> Answer </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="r : ${guessAnswerList}">
+            <td><span th:text="${r.guess}"> Guess </span></td>
+            <td><span th:text="${r.answer}"> Answer </span></td>
+        </tr>
+    </tbody>
+</table>
+
+    <form action="#" th:action="@{/play}" th:object="${guessFormModel}" method="post">
+        <p>Guess: <input type="text" th:field="*{guess}" /></p>
+        <p><input type="submit" value="Submit" /> </p>
+    </form>
+</body>
+</html>

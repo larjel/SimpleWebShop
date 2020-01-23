@@ -1,17 +1,22 @@
 package se.iths.jelleryd.webshop.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 import se.iths.jelleryd.webshop.entity.Category;
 import se.iths.jelleryd.webshop.entity.Customer;
+import se.iths.jelleryd.webshop.entity.CustomerOrder;
+import se.iths.jelleryd.webshop.entity.OrderProduct;
 import se.iths.jelleryd.webshop.entity.Product;
 import se.iths.jelleryd.webshop.repository.CategoryRepository;
 import se.iths.jelleryd.webshop.repository.CustomerRepository;
 import se.iths.jelleryd.webshop.repository.OrderRepository;
 import se.iths.jelleryd.webshop.repository.ProductRepository;
+import se.iths.jelleryd.webshop.web.model.ProductModel;
 import se.iths.jelleryd.webshop.web.model.ShoppingCartModel;
 
 @Service
@@ -69,6 +74,39 @@ public class CustomerServiceImpl {
 
   public ShoppingCartModel getShoppingCart() {
     return shoppingCart;
+  }
+
+  public void addToShoppingCart(ProductModel product) {
+    shoppingCart.addProduct(product);
+  }
+
+  public void removeFromShoppingCart(String itemNumber) {
+    shoppingCart.removeProduct(itemNumber);
+  }
+
+  public void checkout() {
+    Optional<Customer> cust = customerRepository.findByUsername(customer.getUsername());
+
+    if (cust.isPresent()) {
+      List<OrderProduct> orders = new ArrayList<>();
+
+      for (ProductModel model : shoppingCart.getProducts()) {
+        orders.add(new OrderProduct(model.getCount(), model.getProduct()));
+      }
+
+      CustomerOrder customerOrder = new CustomerOrder(orders, cust.get());
+
+      orderRepository.save(customerOrder);
+    }
+  }
+
+  @Async
+  public void clearShoppingCart(long delayMs) {
+    try {
+      Thread.sleep(delayMs);
+    } catch (InterruptedException e) {
+    }
+    shoppingCart.clear();
   }
 
 }

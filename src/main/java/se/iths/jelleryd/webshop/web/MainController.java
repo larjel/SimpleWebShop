@@ -52,18 +52,21 @@ public class MainController {
   }
 
   @GetMapping("/shoppingCart")
-  public String shoppingCartForm(Model model) {
-    // model.addAttribute("searchModel", new SearchModel());
-    // model.addAttribute("categoriesModel", new CategoriesModel(customerService.getCategories()));
+  public String shoppingCart(Model model) {
+    model.addAttribute("cart", customerService.getShoppingCart());
     return "shoppingCart";
   }
 
   @PostMapping("/shoppingCart")
   public String addToShoppingCart(@ModelAttribute ProductModel productModel, Model model) {
-    // model.addAttribute("searchModel", new SearchModel());
-    // model.addAttribute("categoriesModel", new CategoriesModel(customerService.getCategories()));
-    System.out.println("productModel: " + productModel.getCount());
-    return "shoppingCart";
+    Optional<Product> product =
+        customerService.getProductByItemNumber(productModel.getItemNumber());
+    if (product.isPresent()) {
+      productModel.setProduct(product.get());
+      customerService.addToShoppingCart(productModel);
+      return shoppingCart(model);
+    }
+    return "error"; // Should not happen
   }
 
   @GetMapping("/products")
@@ -75,15 +78,59 @@ public class MainController {
     return "products";
   }
 
+  @GetMapping("/removeFromCart")
+  public String removeFromCart(
+      @RequestParam(value = "itemNumber", required = true) String itemNumber, Model model) {
+    customerService.removeFromShoppingCart(itemNumber);
+    return shoppingCart(model);
+  }
+
+  @GetMapping("/updateProductInCart")
+  public String updateProductInCart(
+      @RequestParam(value = "itemNumber", required = true) String itemNumber, Model model) {
+    Optional<ProductModel> product = customerService.getShoppingCart().getProduct(itemNumber);
+    if (product.isPresent()) {
+      model.addAttribute("postLink", "/updateProductInCart");
+      model.addAttribute("buttonText", "Update cart");
+      model.addAttribute("productModel", product.get());
+      return "product";
+    }
+    return "error"; // Should not happen
+  }
+
+  @PostMapping("/updateProductInCart")
+  public String updateProductInCartFormPost(@ModelAttribute ProductModel productModel,
+      Model model) {
+
+    customerService.getShoppingCart().updateProductQuantity(productModel.getItemNumber(),
+        productModel.getCount());
+
+    return shoppingCart(model);
+  }
+
   @GetMapping("/product")
   public String product(@RequestParam(value = "itemNumber", required = true) String itemNumber,
       Model model) {
     Optional<Product> product = customerService.getProductByItemNumber(itemNumber);
     if (product.isPresent()) {
+      model.addAttribute("postLink", "/shoppingCart");
+      model.addAttribute("buttonText", "Add to cart");
       model.addAttribute("productModel", new ProductModel(product.get()));
       return "product";
     }
     return "products";
+  }
+
+  @GetMapping("/checkout")
+  public String checkout(Model model) {
+    customerService.checkout();
+
+    model.addAttribute("cart", customerService.getShoppingCart());
+
+    // Clear cart asynchronously after rendering checkout page
+    customerService.clearShoppingCart(2000);
+
+    return "checkout";
   }
 
   @GetMapping("/addCustomer")

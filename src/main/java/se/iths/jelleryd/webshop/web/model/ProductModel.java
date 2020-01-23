@@ -3,8 +3,9 @@ package se.iths.jelleryd.webshop.web.model;
 import se.iths.jelleryd.webshop.entity.Product;
 
 public class ProductModel {
-  Product product;
-  Integer count;
+  private Product product;
+  private Integer count;
+  private String itemNumber;
 
   public ProductModel(Product product) {
     this.product = product;
@@ -24,6 +25,20 @@ public class ProductModel {
 
   public void setCount(Integer count) {
     this.count = count;
+  }
+
+  public String getItemNumber() {
+    return itemNumber;
+  }
+
+  public void setItemNumber(String itemNumber) {
+    this.itemNumber = itemNumber;
+  }
+
+  @Override
+  public String toString() {
+    return "ProductModel [product=" + product + ", count=" + count + ", itemNumber=" + itemNumber
+        + "]";
   }
 
 }

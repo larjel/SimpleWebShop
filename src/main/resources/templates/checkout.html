@@ -1,14 +1,14 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
-<title>Shopping Cart</title>
+<title>Checkout</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
-
 <body>
 	<div th:replace="fragments/menu :: main-menu" >main menu goes here</div>
 	
-	<h1>Shopping Cart</h1>
+	<h1>Checkout successful!</h1>
+	<p>Your order below will processed shortly.</p>
 	
 	<table>
 		<thead>
@@ -18,7 +18,6 @@
 				<th>Format &nbsp; &nbsp; &nbsp;</th>
 				<th>Price &nbsp; &nbsp;</th>
 				<th>Quantity</th>
-				<th>Remove &nbsp; &nbsp;</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -33,12 +32,7 @@
 					<span th:text="${prod.product.price}">text</span>
 				</td>
 				<td>
-					<a href="shoppingCart" th:text="${prod.count}" th:href="@{/updateProductInCart(itemNumber=${prod.itemNumber})}">product</a>					
-				</td>
-				<td>
-				<button onclick="window.location.href='shoppingCart.html'"
-						th:onclick="'window.location.href = \'' + @{/removeFromCart(itemNumber=${prod.itemNumber})} + '\''"
-						type="button">Remove</button>
+					<span th:text="${prod.count}">text</span>
 				</td>
 			</tr>
 			<tr>
@@ -52,11 +46,6 @@
 			</tr>
 		</tbody>
 	</table>
-
-	<br />
-	<button onclick="window.location.href='shoppingCart.html'"
-			th:onclick="'window.location.href = \'' + @{/checkout} + '\''"
-			type="button">Checkout</button>
 	
 </body>
 </html>

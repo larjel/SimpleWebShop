@@ -1,6 +1,7 @@
 package se.iths.jelleryd.webshop.entity;
 
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,8 +17,8 @@ public class CustomerOrder {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long orderNumber;
 
-  @OneToMany(fetch = FetchType.EAGER)
-  private List<Product> products;
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  private List<OrderProduct> products;
 
   @ManyToOne // Bi-directional relationship
   private Customer customer;
@@ -28,16 +29,16 @@ public class CustomerOrder {
     // Required by JPA
   }
 
-  public CustomerOrder(List<Product> products, Customer customer) {
+  public CustomerOrder(List<OrderProduct> products, Customer customer) {
     this.products = products;
     this.customer = customer;
   }
 
-  public List<Product> getProducts() {
+  public List<OrderProduct> getProducts() {
     return products;
   }
 
-  public void setProducts(List<Product> products) {
+  public void setProducts(List<OrderProduct> products) {
     this.products = products;
   }
 

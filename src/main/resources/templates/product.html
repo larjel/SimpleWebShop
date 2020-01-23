@@ -9,7 +9,8 @@
 	
 	<h1><span th:text="${productModel.product.name}">text</span></h1>
 
-	<form action="/shoppingCart" method="POST" th:object="${productModel}" >
+	<form action="/shoppingCart" th:action="*{postLink}" method="POST">
+	<input type="hidden" name="itemNumber" value="itemNumber" th:value="${productModel.product.itemNumber}" readonly="readonly" />
 	<table>
 		<thead>
 			<tr>
@@ -17,8 +18,7 @@
 				<th>Description &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
 					&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
 				<th>Price &nbsp; &nbsp; &nbsp; &nbsp; </th>
-				<th>Quantity &nbsp; &nbsp;</th>
-				<th>Add to cart</th>
+				<th>Quantity &nbsp; &nbsp;</th>				
 			</tr>
 		</thead>
 		<tbody>
@@ -33,7 +33,7 @@
 					<span th:text="${productModel.product.price}">text</span>
 				</td>
 				<td>
-					<select th:field="*{count}">
+					<select th:field="*{productModel.count}">
 					  <option th:text="1" th:value="1" value="1">1</option>
 					  <option th:text="2" th:value="2" value="2">2</option>
 					  <option th:text="3" th:value="3" value="3">3</option>
@@ -44,12 +44,12 @@
 					  <option th:text="8" th:value="8" value="8">8</option>
 					</select>				
 				</td>
-				<td>
-					<input type="submit" value="Add" class="button" />
-				</td>
 			</tr>
 		</tbody>
 	</table>
+		
+	<br />
+	<input type="submit" value="Add" th:value="${buttonText}" class="button" />
 	</form>
 
 </body>

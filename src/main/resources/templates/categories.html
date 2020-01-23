@@ -5,6 +5,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
+	<div th:replace="fragments/menu :: main-menu" >main menu goes here</div>
+	
 	<h1>Products</h1>
 	<table>
 		<thead>
@@ -15,7 +17,7 @@
 		<tbody>
 			<tr th:each="cat : ${categoriesModel.categoriesList}">
 				<td>
-					<a href="products.html" th:text="${cat}" th:href="@{/products(category=${cat})}">category</a>
+					<a href="products.html" th:text="${cat.name}" th:href="@{/products(category=${cat.name})}">category</a>
 				</td>
 			</tr>
 		</tbody>

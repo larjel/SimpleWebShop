@@ -1,4 +1,4 @@
-package se.iths.jelleryd.webshop.web;
+package se.iths.jelleryd.webshop.web.model;
 
 public class SearchModel {
 

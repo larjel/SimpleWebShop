@@ -49,6 +49,7 @@ public class Customer {
     // Required by JPA
   }
 
+  /** Create with all REQUIRED data */
   public Customer(String username, String password, String firstName, String secondName,
       String address1, String zip, String country) {
     this.username = username;
@@ -58,6 +59,16 @@ public class Customer {
     this.address1 = address1;
     this.zip = zip;
     this.country = country;
+  }
+
+  /** Create with ALL data */
+  public Customer(String username, String password, String firstName, String secondName,
+      String address1, String address2, String address3, String zip, String country,
+      List<CustomerOrder> orders) {
+    this(username, password, firstName, secondName, address1, zip, country);
+    this.address2 = address2;
+    this.address3 = address3;
+    this.orders = orders;
   }
 
   public String getUsername() {

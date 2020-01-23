@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Product</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<div th:replace="fragments/menu :: main-menu" >main menu goes here</div>
+	
+	<h1><span th:text="${productModel.product.name}">text</span></h1>
+
+	<form action="/shoppingCart" method="POST" th:object="${productModel}" >
+	<table>
+		<thead>
+			<tr>
+				<th>Format &nbsp; &nbsp; &nbsp; &nbsp;</th>
+				<th>Description &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+					&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
+				<th>Price &nbsp; &nbsp; &nbsp; &nbsp; </th>
+				<th>Quantity &nbsp; &nbsp;</th>
+				<th>Add to cart</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					<span th:text="${productModel.product.category.name}">text</span>
+				</td>
+				<td>
+					<span th:text="${productModel.product.description}">text</span>
+				</td>
+				<td>
+					<span th:text="${productModel.product.price}">text</span>
+				</td>
+				<td>
+					<select th:field="*{count}">
+					  <option th:text="1" th:value="1" value="1">1</option>
+					  <option th:text="2" th:value="2" value="2">2</option>
+					  <option th:text="3" th:value="3" value="3">3</option>
+					  <option th:text="4" th:value="4" value="4">4</option>
+					  <option th:text="5" th:value="5" value="5">5</option>
+					  <option th:text="6" th:value="6" value="6">6</option>
+					  <option th:text="7" th:value="7" value="7">7</option>
+					  <option th:text="8" th:value="8" value="8">8</option>
+					</select>				
+				</td>
+				<td>
+					<input type="submit" value="Add" class="button" />
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</form>
+
+</body>
+</html>

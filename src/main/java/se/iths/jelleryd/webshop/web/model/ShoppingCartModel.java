@@ -1,4 +1,4 @@
-package se.iths.jelleryd.webshop.web;
+package se.iths.jelleryd.webshop.web.model;
 
 import java.util.ArrayList;
 import java.util.List;

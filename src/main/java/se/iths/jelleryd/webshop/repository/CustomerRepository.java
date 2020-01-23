@@ -1,9 +1,9 @@
 package se.iths.jelleryd.webshop.repository;
 
-import se.iths.jelleryd.webshop.entity.Customer;
-import java.util.List;
+import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
+import se.iths.jelleryd.webshop.entity.Customer;
 
 public interface CustomerRepository extends CrudRepository<Customer, Long> {
-  List<Customer> findByUsername(String username);
+  Optional<Customer> findByUsername(String username);
 }

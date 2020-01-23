@@ -1,12 +1,37 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>Products</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
-
 <body>
-	<h1>Products</h1>
-	<a href="/">Go to login page</a>
+	<div th:replace="fragments/menu :: main-menu" >main menu goes here</div>
+	
+	<h1><span th:text="${category}"> Products by Category </span></h1>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Title &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
+				<th>Description &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+					&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
+				<th>Price &nbsp; &nbsp; &nbsp; &nbsp; </th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="prod : ${productsModel.productsList}">
+				<td>
+					<a href="product.html" th:text="${prod.name}" th:href="@{/product(itemNumber=${prod.itemNumber})}">product</a>
+				</td>
+				<td>
+					<span th:text="${prod.description}">text</span>
+				</td>
+				<td>
+					<span th:text="${prod.price}">text</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
 </body>
 </html>

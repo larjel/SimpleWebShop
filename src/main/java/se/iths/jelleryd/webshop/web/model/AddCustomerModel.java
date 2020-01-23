@@ -1,9 +1,10 @@
-package se.iths.jelleryd.webshop.web;
+package se.iths.jelleryd.webshop.web.model;
 
 import java.util.Map;
 import java.util.TreeMap;
+import se.iths.jelleryd.webshop.entity.Customer;
 
-public class AddUserModel {
+public class AddCustomerModel {
 
   private String username;
   private String password;
@@ -15,6 +16,11 @@ public class AddUserModel {
   private String address3;
   private String zip;
   private String country;
+
+  public Customer modelToCustomer() {
+    return new Customer(username, password, firstName, secondName, address1, address2, address3,
+        zip, country, null);
+  }
 
   public String getUsername() {
     return username;

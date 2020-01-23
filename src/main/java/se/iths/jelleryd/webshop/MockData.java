@@ -27,6 +27,12 @@ public class MockData {
   private CategoryRepository categoryRepository;
 
   // @PostConstruct
+  public void addMockDataSingle() {
+    Category categoryDVD = new Category("BluRay");
+    categoryRepository.save(categoryDVD);
+  }
+
+  // @PostConstruct
   public void addMockDataToDatabase() {
 
     Customer customer = new Customer("lars", "lars", "Lars", "J", "Hägersten", "12932", "Sweden");

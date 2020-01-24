@@ -8,6 +8,29 @@
 		<div th:replace="fragments/menu :: main-admin-menu" >main menu goes here</div>
 	
 		<h1>Add new product</h1>
-		<h2>TO DO!</h2>
+		<form action="/adminAddProduct" method="POST" th:object="${addProductModel}" >
+			
+			<p>
+				<div>Item number:</div>
+				<input type="text" name="itemNumber" required="required" th:field="*{itemNumber}" />
+				<br />
+				<div>Name:</div>
+				<input type="text" name="name" th:field="*{name}" />
+				<br />
+				<div>Price:</div>
+				<input type="text" name="price" th:field="*{price}"/>
+				<br />
+				<div>Description:</div>
+				<input type="text" name="description" th:field="*{description}" />
+				<br />	
+				<div>Category:</div>
+				<select name="category" required="required" th:field="*{category}">
+					<option value="category" selected="selected" disabled="disabled">Category</option>
+					<option th:each="category : ${addProductModel.categories}" th:text="${category.value}" th:value="${category.key}" value="XXX">Category</option>
+				</select>							
+			</p>
+	
+			<input type="submit" value="Save new product" class="button" />
+		</form>		
 	</body>
 </html>

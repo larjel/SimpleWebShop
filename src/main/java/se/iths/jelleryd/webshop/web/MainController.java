@@ -1,5 +1,6 @@
 package se.iths.jelleryd.webshop.web;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
@@ -15,6 +16,7 @@ import se.iths.jelleryd.webshop.entity.CustomerOrder;
 import se.iths.jelleryd.webshop.entity.Product;
 import se.iths.jelleryd.webshop.service.UserService;
 import se.iths.jelleryd.webshop.web.model.AddCustomerModel;
+import se.iths.jelleryd.webshop.web.model.AddProductModel;
 import se.iths.jelleryd.webshop.web.model.AdminOrderModel;
 import se.iths.jelleryd.webshop.web.model.CategoriesModel;
 import se.iths.jelleryd.webshop.web.model.LoginFormModel;
@@ -277,6 +279,9 @@ public class MainController {
     if (!customerService.isLoggedinAsAdmin())
       return loginForm(model);
 
+    AddProductModel addProductModel = new AddProductModel();
+    addProductModel.setCategoriesFromList(Arrays.asList("DVD", "Vinyl"));
+    model.addAttribute("addProductModel", addProductModel);
     return "adminAddProduct";
   }
 

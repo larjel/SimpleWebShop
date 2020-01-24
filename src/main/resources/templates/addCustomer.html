@@ -9,7 +9,7 @@
 		
 		<form action="/addCustomer" method="POST" th:object="${addCustomerModel}" >
 			<p>
-				<div class="fieldTitle">Login name &amp; Password</div>
+				<div>Login name &amp; Password</div>
 	
 				<input type="text" name="username" placeholder="username" required="required" th:field="*{username}" />
 				<input type="password" name="pass1" placeholder="password" required="required" th:field="*{password}" />
@@ -36,7 +36,7 @@
 				<br />
 				<input type="text" name="zip" placeholder="Zip or Postal Code" required="required" th:field="*{zip}" />
 				<br />	
-				<select id="country" name="country" required="required" th:field="*{country}">
+				<select name="country" required="required" th:field="*{country}">
 					<option value="country" selected="selected" disabled="disabled">Country</option>
 					<option th:each="country : ${addCustomerModel.countries}" th:text="${country.value}" th:value="${country.key}" value="XXX">Country Name</option>
 				</select>							

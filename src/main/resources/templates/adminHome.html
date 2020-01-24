@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>The Web Shop - Administrator Page</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<div th:replace="fragments/menu :: main-admin-menu" >main menu goes here</div>
+
+	<h1>The Web Shop - Administrator Page</h1>
+    <p>
+    	<div>All orders <a href="adminOrders?show=all">here</a></div>
+    	<div>Not dispatched orders <a href="adminOrders?show=notdispatched">here</a></div>
+    	<div>Dispatched orders <a href="adminOrders?show=dispatched">here</a></div>
+    </p>
+    <p>Add new product <a href="adminAddProduct">here</a></p>
+	
+</body>
+</html>

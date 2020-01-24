@@ -62,4 +62,12 @@ public class CustomerOrder {
     this.dispatched = dispatched;
   }
 
+  public double sumOfAllProducts() {
+    double sum = 0.0;
+    for (OrderProduct product : products) {
+      sum += product.getProduct().getPrice() * product.getQuantity();
+    }
+    return sum;
+  }
+
 }

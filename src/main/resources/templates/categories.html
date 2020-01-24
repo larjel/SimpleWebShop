@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>Product Categories</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -23,13 +23,13 @@
 		</tbody>
 	</table>
 
-	<form action="#" th:action="@{/categories}" th:object="${searchModel}"
+	<form action="#" th:action="@{/search}" th:object="${searchModel}"
 		method="post">
 		<p>
 			Search for product name: <input type="text" th:field="*{productName}" />
 		</p>
 		<p>
-			<input type="submit" value="Submit" />
+			<input type="submit" value="Search" />
 		</p>
 	</form>
 </body>

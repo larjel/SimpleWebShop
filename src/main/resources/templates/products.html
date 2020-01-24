@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>Products</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -7,12 +7,13 @@
 <body>
 	<div th:replace="fragments/menu :: main-menu" >main menu goes here</div>
 	
-	<h1><span th:text="${category}"> Products by Category </span></h1>
+	<h1><span th:text="${category}"> heading </span></h1>
 
 	<table>
 		<thead>
 			<tr>
 				<th>Title &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
+				<th>Format &nbsp; &nbsp; &nbsp;</th>
 				<th>Description &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
 					&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
 				<th>Price &nbsp; &nbsp; &nbsp; &nbsp; </th>
@@ -22,6 +23,9 @@
 			<tr th:each="prod : ${productsModel.productsList}">
 				<td>
 					<a href="product.html" th:text="${prod.name}" th:href="@{/product(itemNumber=${prod.itemNumber})}">product</a>
+				</td>
+				<td>
+					<span th:text="${prod.category.name}">text</span>
 				</td>
 				<td>
 					<span th:text="${prod.description}">text</span>

@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Products</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<div th:replace="fragments/menu :: main-admin-menu" >main menu goes here</div>
+	
+	<h1><span th:text="${orderType}"> heading </span></h1>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Item number &nbsp; &nbsp; &nbsp; &nbsp;</th>
+				<th>Name &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+				&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </th>
+				<th>Format &nbsp; &nbsp; &nbsp;</th>
+				<th>Price &nbsp; &nbsp;</th>
+				<th>Quantity</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="prod : ${customerOrder.products}">
+				<td>
+					<span th:text="${prod.product.itemNumber}">text</span>
+				</td>
+				<td>
+					<span th:text="${prod.product.name}">text</span>
+				</td>
+				<td>
+					<span th:text="${prod.product.category.name}">text</span>
+				</td>
+				<td>
+					<span th:text="${prod.product.price}">text</span>
+				</td>
+				<td>
+					<span th:text="${prod.quantity}">text</span>
+				</td>
+			</tr>
+			<tr>
+			<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>Total: 
+					<span th:text="${customerOrder.sumOfAllProducts()}">text</span>
+					SEK
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<p>
+		<div><b>Shipping Address:</b></div>
+		<span th:text="${customerOrder.customer.firstName}">text</span>	
+		<span th:text="${customerOrder.customer.secondName}">text</span>
+		<div th:text="${customerOrder.customer.address1}">text</div>	
+		<div th:text="${customerOrder.customer.address2}">text</div>	
+		<div th:text="${customerOrder.customer.address3}">text</div>	
+		<div th:text="${customerOrder.customer.zip}">text</div>	
+		<div th:text="${customerOrder.customer.country}">text</div>	
+	</p>	
+
+	<br />
+	<span th:if="${!customerOrder.dispatched}">
+	<button onclick="window.location.href='dispatched.html'"
+			th:onclick="'window.location.href = \'' + @{/adminDispatched(orderNumber=${customerOrder.orderNumber})} + '\''"
+			type="button">Mark as dispatched</button>
+	</span>
+	<span th:unless="${!customerOrder.dispatched}">HAS BEEN DISPATCHED!</span>
+	
+</body>
+</html>

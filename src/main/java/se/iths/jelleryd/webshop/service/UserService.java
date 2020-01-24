@@ -21,7 +21,10 @@ import se.iths.jelleryd.webshop.web.model.ShoppingCartModel;
 
 @Service
 @SessionScope
-public class CustomerServiceImpl {
+public class UserService {
+
+  private static final String ADMIN_USER_NAME = "admin";
+  private static final String ADMIN_PASSWORD = "admin";
 
   @Autowired
   private CustomerRepository customerRepository;
@@ -35,24 +38,47 @@ public class CustomerServiceImpl {
   private ShoppingCartModel shoppingCart = new ShoppingCartModel();
 
   private boolean isLoggedin;
+  private boolean isAdmin;
   private Customer customer;
 
   public boolean login(String username, String password) {
-    isLoggedin = false;
-    Optional<Customer> customerOptional = customerRepository.findByUsername(username);
-    if (customerOptional.isPresent()) {
-      customer = customerOptional.get();
-      if (customer.getPassword() != null && customer.getPassword().equals(password)) {
-        isLoggedin = true;
+    isLoggedin = isAdmin = false;
+
+    if (isAdminUserName(username)) {
+      isLoggedin = isAdmin = username.equals(ADMIN_USER_NAME) && username.equals(ADMIN_PASSWORD);
+    } else {
+      Optional<Customer> customerOptional = customerRepository.findByUsername(username);
+      if (customerOptional.isPresent()) {
+        customer = customerOptional.get();
+        if (customer.getPassword() != null && customer.getPassword().equals(password)) {
+          isLoggedin = true;
+        }
       }
     }
     return isLoggedin;
   }
 
+  public boolean isAdminUserName(String username) {
+    return username.trim().equalsIgnoreCase(ADMIN_USER_NAME);
+  }
+
+  public boolean isLoggedin() {
+    return isLoggedin && customer != null;
+  }
+
+  public boolean isLoggedinAsAdmin() {
+    return isLoggedin && isAdmin;
+  }
+
+  public void logout() {
+    isLoggedin = isAdmin = false;
+    customer = null;
+  }
+
   public boolean addCustomer(Customer newCustomer) {
     Optional<Customer> customerOptional =
         customerRepository.findByUsername(newCustomer.getUsername());
-    if (customerOptional.isPresent()) {
+    if (customerOptional.isPresent() || isAdminUserName(newCustomer.getUsername())) {
       return false; // User name already exists!
     }
     customerRepository.save(newCustomer);
@@ -70,6 +96,10 @@ public class CustomerServiceImpl {
 
   public Iterable<Category> getCategories() {
     return categoryRepository.findAll();
+  }
+
+  public List<Product> getProductsByName(String name) {
+    return productRepository.findByName(name);
   }
 
   public ShoppingCartModel getShoppingCart() {
@@ -107,6 +137,40 @@ public class CustomerServiceImpl {
     } catch (InterruptedException e) {
     }
     shoppingCart.clear();
+  }
+
+  public Customer getCustomer() {
+    return customer;
+  }
+
+  public boolean isAdmin() {
+    return isAdmin;
+  }
+
+  public Iterable<CustomerOrder> adminGetAllOrders() {
+    return orderRepository.findAll();
+  }
+
+  public List<CustomerOrder> adminGetDispatchedOrders() {
+    return orderRepository.findAllDispatchedOrders();
+  }
+
+  public List<CustomerOrder> adminGetNotDispatchedOrders() {
+    return orderRepository.findAllNotDispatchedOrders();
+  }
+
+  public Optional<CustomerOrder> adminGetOrder(long orderNumber) {
+    return orderRepository.findById(orderNumber);
+  }
+
+  public boolean adminUpdateOrderAsDispatched(long orderNumber) {
+    Optional<CustomerOrder> order = adminGetOrder(orderNumber);
+    if (order.isPresent()) {
+      order.get().setDispatched(true);
+      orderRepository.save(order.get());
+      return true;
+    }
+    return false;
   }
 
 }

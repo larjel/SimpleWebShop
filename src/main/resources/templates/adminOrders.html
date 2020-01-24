@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Products</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<div th:replace="fragments/menu :: main-admin-menu" >main menu goes here</div>
+	
+	<h1><span th:text="${orderType}"> heading </span></h1>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Order &nbsp;</th>
+				<th>User &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
+				<th>Order value &nbsp; &nbsp; &nbsp; &nbsp; </th>
+				<th>Dispatched &nbsp; &nbsp; &nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="order : ${adminOrderModel.orders}">
+				<td>
+					<a href="adminOrderDetails.html" th:text="${order.orderNumber}" 
+						th:href="@{/adminOrderDetails(orderNumber=${order.orderNumber})}">order nr</a>
+				</td>
+				<td>
+					<span th:text="${order.customer.username}">text</span>
+				</td>
+				<td>
+					<span th:text="${order.sumOfAllProducts()}">text</span>
+				</td>
+				<td>
+					<span th:text="${order.dispatched}">text</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+</body>
+</html>

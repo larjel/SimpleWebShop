@@ -1,4 +1,4 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 	<body>
 	
@@ -6,6 +6,16 @@
 			<a href="/categories">Products</a>
 			&nbsp;
 			<a href="/shoppingCart">Shopping Cart</a>
+			&nbsp;
+			<a href="/profile">Profile</a>
+			&nbsp;
+			<a href="/logout">Logout</a>
+		</div>
+
+		<div th:fragment="main-admin-menu"  >
+			<a href="/adminHome">Admin Home</a>
+			&nbsp;
+			<a href="/logout">Logout</a>
 		</div>
 		
 		<p th:fragment="footer-menu">

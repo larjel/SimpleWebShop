@@ -33,8 +33,8 @@ class RestApiControllerTest {
     MvcResult result = mockMvc.perform(requestBuilder).andReturn();
     MockHttpServletResponse response = result.getResponse();
 
-    // Assert that the return status is ACCEPTED
-    assertEquals(HttpStatus.ACCEPTED.value(), response.getStatus());
+    // Assert that the return status is OK
+    assertEquals(HttpStatus.OK.value(), response.getStatus());
   }
 
   @Test
@@ -47,8 +47,8 @@ class RestApiControllerTest {
     MvcResult result = mockMvc.perform(requestBuilder).andReturn();
     MockHttpServletResponse response = result.getResponse();
 
-    // Assert that the return status is ACCEPTED
-    assertEquals(HttpStatus.ACCEPTED.value(), response.getStatus());
+    // Assert that the return status is OK
+    assertEquals(HttpStatus.OK.value(), response.getStatus());
   }
 
   @Test
@@ -61,8 +61,8 @@ class RestApiControllerTest {
     MvcResult result = mockMvc.perform(requestBuilder).andReturn();
     MockHttpServletResponse response = result.getResponse();
 
-    // Assert that the return status is ACCEPTED
-    assertEquals(HttpStatus.ACCEPTED.value(), response.getStatus());
+    // Assert that the return status is OK
+    assertEquals(HttpStatus.OK.value(), response.getStatus());
   }
 
 }

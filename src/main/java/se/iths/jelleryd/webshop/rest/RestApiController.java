@@ -10,19 +10,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import se.iths.jelleryd.webshop.entity.CustomerOrder;
 import se.iths.jelleryd.webshop.service.UserService;
+import se.iths.jelleryd.webshop.web.model.AddProductModel;
 
 @RestController
 public class RestApiController {
 
   @Autowired
-  UserService customerService;
+  UserService userService;
 
   @GetMapping("/admin/allorders")
   public ResponseEntity<List<CustomerOrder>> allOrders() {
-    List<CustomerOrder> orders = iterableToFilteredList(customerService.adminGetAllOrders());
+    List<CustomerOrder> orders = iterableToFilteredList(userService.adminGetAllOrders());
 
     if (orders != null) {
-      return ResponseEntity.accepted().body(orders);
+      return ResponseEntity.ok().body(orders);
     } else {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
@@ -30,10 +31,10 @@ public class RestApiController {
 
   @GetMapping("/admin/dispatchedorders")
   public ResponseEntity<List<CustomerOrder>> dispatchedOrders() {
-    List<CustomerOrder> orders = iterableToFilteredList(customerService.adminGetDispatchedOrders());
+    List<CustomerOrder> orders = iterableToFilteredList(userService.adminGetDispatchedOrders());
 
     if (orders != null) {
-      return ResponseEntity.accepted().body(orders);
+      return ResponseEntity.ok().body(orders);
     } else {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
@@ -41,11 +42,10 @@ public class RestApiController {
 
   @GetMapping("/admin/notdispatchedorders")
   public ResponseEntity<List<CustomerOrder>> adminGetNotDispatchedOrders() {
-    List<CustomerOrder> orders =
-        iterableToFilteredList(customerService.adminGetNotDispatchedOrders());
+    List<CustomerOrder> orders = iterableToFilteredList(userService.adminGetNotDispatchedOrders());
 
     if (orders != null) {
-      return ResponseEntity.accepted().body(orders);
+      return ResponseEntity.ok().body(orders);
     } else {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
@@ -54,10 +54,25 @@ public class RestApiController {
   @GetMapping("/admin/setdispatched/{ordernumber}")
   public ResponseEntity<String> setDispatched(@PathVariable("ordernumber") Long ordernumber) {
 
-    if (customerService.adminUpdateOrderAsDispatched(ordernumber)) {
+    if (userService.adminUpdateOrderAsDispatched(ordernumber)) {
       return ResponseEntity.accepted().body("Order marked as dispatched!");
     } else {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error! Order not found.");
+    }
+  }
+
+  @GetMapping("/admin/addproduct/{itemnumber}/{name}/{price}/{description}/{category}")
+  public ResponseEntity<String> addProduct(@PathVariable("itemnumber") String itemnumber,
+      @PathVariable("name") String name, @PathVariable("price") Double price,
+      @PathVariable("description") String description, @PathVariable("category") String category) {
+    try {
+      AddProductModel addProductModel =
+          new AddProductModel(itemnumber, name, price, category, description);
+      userService.adminAddProduct(addProductModel);
+
+      return ResponseEntity.accepted().body("Product added!");
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error! Bad data input?");
     }
   }
 

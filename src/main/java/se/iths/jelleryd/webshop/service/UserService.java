@@ -16,6 +16,7 @@ import se.iths.jelleryd.webshop.repository.CategoryRepository;
 import se.iths.jelleryd.webshop.repository.CustomerRepository;
 import se.iths.jelleryd.webshop.repository.OrderRepository;
 import se.iths.jelleryd.webshop.repository.ProductRepository;
+import se.iths.jelleryd.webshop.web.model.AddProductModel;
 import se.iths.jelleryd.webshop.web.model.ProductModel;
 import se.iths.jelleryd.webshop.web.model.ShoppingCartModel;
 
@@ -86,7 +87,7 @@ public class UserService {
   }
 
   public List<Product> getProductsByCategory(String category) {
-    Category categoryObj = categoryRepository.findByName(category);
+    Category categoryObj = getCategory(category);
     return productRepository.findByCategory(categoryObj);
   }
 
@@ -96,6 +97,10 @@ public class UserService {
 
   public Iterable<Category> getCategories() {
     return categoryRepository.findAll();
+  }
+
+  public Category getCategory(String name) {
+    return categoryRepository.findByName(name);
   }
 
   public List<Product> getProductsByName(String name) {
@@ -171,6 +176,15 @@ public class UserService {
       return true;
     }
     return false;
+  }
+
+  public void adminAddProduct(AddProductModel upm) {
+    Category category = getCategory(upm.getCategory());
+
+    Product newProduct = new Product(upm.getItemNumber(), upm.getName(), upm.getPrice(), category,
+        upm.getDescription());
+
+    productRepository.save(newProduct);
   }
 
 }

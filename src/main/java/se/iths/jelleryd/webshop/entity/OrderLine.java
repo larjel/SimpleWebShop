@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
-public class OrderProduct {
+public class OrderLine {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,11 +21,11 @@ public class OrderProduct {
   @OneToOne(fetch = FetchType.EAGER)
   private Product product;
 
-  public OrderProduct() {
+  public OrderLine() {
     // Required by JPA
   }
 
-  public OrderProduct(Integer quantity, Product product) {
+  public OrderLine(Integer quantity, Product product) {
     this.quantity = quantity;
     this.product = product;
   }

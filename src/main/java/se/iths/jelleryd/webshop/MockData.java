@@ -29,8 +29,7 @@ public class MockData {
   // @PostConstruct
   public void addMockDataToDatabase() {
 
-    Customer customer =
-        new Customer("lars", "lars", "Lars", "Jelleryd", "Hägersten", "12932", "Sweden");
+    Customer customer = new Customer("lars", "lars", "Lars", "J", "Stockholm", "11010", "Sweden");
     customerRepository.save(customer);
 
     Category categoryCD = new Category("CD");

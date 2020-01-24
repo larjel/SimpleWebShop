@@ -10,7 +10,7 @@ import org.springframework.web.context.annotation.SessionScope;
 import se.iths.jelleryd.webshop.entity.Category;
 import se.iths.jelleryd.webshop.entity.Customer;
 import se.iths.jelleryd.webshop.entity.CustomerOrder;
-import se.iths.jelleryd.webshop.entity.OrderProduct;
+import se.iths.jelleryd.webshop.entity.OrderLine;
 import se.iths.jelleryd.webshop.entity.Product;
 import se.iths.jelleryd.webshop.repository.CategoryRepository;
 import se.iths.jelleryd.webshop.repository.CustomerRepository;
@@ -123,10 +123,10 @@ public class UserService {
     Optional<Customer> cust = customerRepository.findByUsername(customer.getUsername());
 
     if (cust.isPresent()) {
-      List<OrderProduct> orders = new ArrayList<>();
+      List<OrderLine> orders = new ArrayList<>();
 
       for (ProductModel model : shoppingCart.getProducts()) {
-        orders.add(new OrderProduct(model.getCount(), model.getProduct()));
+        orders.add(new OrderLine(model.getCount(), model.getProduct()));
       }
 
       CustomerOrder customerOrder = new CustomerOrder(orders, cust.get());

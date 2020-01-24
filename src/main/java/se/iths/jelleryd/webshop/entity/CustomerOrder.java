@@ -18,7 +18,7 @@ public class CustomerOrder {
   private Long orderNumber;
 
   @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  private List<OrderProduct> products;
+  private List<OrderLine> products;
 
   @ManyToOne // Bi-directional relationship
   private Customer customer;
@@ -29,16 +29,16 @@ public class CustomerOrder {
     // Required by JPA
   }
 
-  public CustomerOrder(List<OrderProduct> products, Customer customer) {
+  public CustomerOrder(List<OrderLine> products, Customer customer) {
     this.products = products;
     this.customer = customer;
   }
 
-  public List<OrderProduct> getProducts() {
+  public List<OrderLine> getProducts() {
     return products;
   }
 
-  public void setProducts(List<OrderProduct> products) {
+  public void setProducts(List<OrderLine> products) {
     this.products = products;
   }
 
@@ -64,7 +64,7 @@ public class CustomerOrder {
 
   public double sumOfAllProducts() {
     double sum = 0.0;
-    for (OrderProduct product : products) {
+    for (OrderLine product : products) {
       sum += product.getProduct().getPrice() * product.getQuantity();
     }
     return sum;

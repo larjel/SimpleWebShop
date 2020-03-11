@@ -1,2 +1,2 @@
 # WebShop
-Basic Web Shop built with Spring Boot and MySQL
+Basic Web Shop built with Spring Boot, Thymeleaf and MySQL
